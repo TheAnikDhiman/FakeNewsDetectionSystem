@@ -57,7 +57,6 @@ pip install -r requirements.txt
 
 Open notebook.ipynb and run all cells.
 
-3. (Optional) Run prediction script
 python app.py
 
 📁 Dataset
@@ -75,6 +74,7 @@ Model → Logistic Regression
 
 Outcome → Fake/Real classification
 
+Test Accuracy: **99.35%**
 👨‍💻 Author
 
 Anik Dhiman
