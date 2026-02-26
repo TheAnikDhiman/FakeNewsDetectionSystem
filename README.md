@@ -1,80 +1,97 @@
-📰 Fake News Detection (Machine Learning Project)
+# 📰 Fake News Detection System
 
-This project identifies whether a news article is Real or Fake using NLP techniques and traditional Machine Learning. The goal was to build a simple, interpretable, and efficient model suitable for academic submissions and real-world learning.
+A machine learning system that classifies news articles as **Real or Fake** with 99.64% accuracy.  
+Built with a TF-IDF + SGD Classifier pipeline, exposed via both a Streamlit UI and a FastAPI REST endpoint.
 
-🚀 Features
+---
 
-Text preprocessing (cleaning, stopwords removal, stemming)
+## Features
 
-TF-IDF vector representation
+- **NLP preprocessing pipeline** — URL removal, lowercasing, punctuation stripping, whitespace normalization
+- **TF-IDF vectorization** — unigrams + bigrams, 50,000 features, trained on title + article text combined
+- **SGD Classifier** — fast linear model suitable for high-dimensional sparse text data
+- **Confidence scoring** — decision boundary distance mapped to a 0–100% confidence value
+- **Streamlit UI** — interactive frontend with model metrics panel and confusion matrix
+- **FastAPI REST API** — `/predict` endpoint for programmatic access with JSON I/O
 
-Logistic Regression classifier
+---
 
-Model evaluation with accuracy, confusion matrix, and classification report
+## Model Performance
 
-Custom input prediction
+| Metric | Score |
+|---|---|
+| Accuracy | 99.64% |
+| Precision (Fake) | 99.70% |
+| Recall (Fake) | 99.62% |
+| Precision (Real) | 99.58% |
+| Recall (Real) | 99.67% |
 
-Organized Jupyter Notebook with clear steps
+Trained on **44,898 articles** (23,481 fake · 21,417 real)
 
-🧠 Tech Stack
+---
 
-Python
+## Project Structure
+```
+FakeNewsProject/
+├── train_model.py     # Data loading, preprocessing, training, evaluation
+├── app.py             # Streamlit UI
+├── api.py             # FastAPI REST API
+├── model.pkl          # Trained SGD Classifier
+├── vectorizer.pkl     # Fitted TF-IDF Vectorizer
+├── metrics.json       # Saved evaluation metrics
+├── Fake.csv           # Fake news dataset
+├── True.csv           # Real news dataset
+└── requirements.txt
+```
 
-Scikit-learn
+---
 
-Pandas & NumPy
+## Setup
+```bash
+pip install scikit-learn joblib streamlit fastapi uvicorn pandas
+```
 
-NLTK
+**Train the model:**
+```bash
+python train_model.py
+```
 
-Jupyter Notebook
+**Run the Streamlit UI:**
+```bash
+streamlit run app.py
+```
 
-📂 Project Structure
-fake-news-detection/
-│
-├── notebook.ipynb          # Data cleaning, EDA, training & evaluation
-├── app.py (optional)       # Script for custom input prediction
-├── requirements.txt        # Dependencies
-├── README.md               # Project documentation
-└── dataset-link.txt        # (Add dataset link instead of raw data)
+**Run the FastAPI server:**
+```bash
+uvicorn api:app --reload
+```
 
-📊 Model
+API docs available at: `http://localhost:8000/docs`
 
-The model uses TF-IDF vectorization + Logistic Regression, chosen because:
+---
 
-It performs well on text classification
+## API Usage
 
-It's fast to train
+**POST** `/predict`
+```bash
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Scientists discover new treatment for common disease"}'
+```
 
-It’s easy to interpret for academic submissions
+**Response:**
+```json
+{
+  "label": "REAL",
+  "confidence": 87.3,
+  "is_fake": false
+}
+```
 
-(If you share your model accuracy, I’ll add it here.)
+**GET** `/metrics` — Returns model evaluation metrics
 
-🧪 How to Run Locally
-1. Install dependencies
-pip install -r requirements.txt
+---
 
-2. Run the notebook
+## Dataset
 
-Open notebook.ipynb and run all cells.
-
-python app.py
-
-📁 Dataset
-
-Dataset used: Fake News Classification dataset
-You can download it from Kaggle
-
-Add link here: [<insert-dataset-link>](https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset)
-
-🎯 Results
-
-Preprocessing → TF-IDF vectors
-
-Model → Logistic Regression
-
-Outcome → Fake/Real classification
-
-Test Accuracy: **99.35%**
-👨‍💻 Author
-
-Anik Dhiman
+[Fake and Real News Dataset](https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset) via Kaggle.

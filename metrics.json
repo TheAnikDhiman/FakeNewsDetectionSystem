@@ -1,0 +1,17 @@
+{
+  "accuracy": 99.64,
+  "precision_fake": 99.7,
+  "recall_fake": 99.62,
+  "precision_real": 99.58,
+  "recall_real": 99.67,
+  "confusion_matrix": [
+    [
+      4692,
+      18
+    ],
+    [
+      14,
+      4256
+    ]
+  ]
+}
